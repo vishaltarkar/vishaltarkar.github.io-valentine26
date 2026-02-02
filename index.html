@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will you be my Valentine?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffdde1, #ee9ca7);
+      color: #3b1c32;
+    }
+
+    .card {
+      position: relative;
+      max-width: 480px;
+      width: 90%;
+      padding: 32px 24px 40px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.18),
+        0 0 0 1px rgba(255, 255, 255, 0.6);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "❤";
+      position: absolute;
+      font-size: 200px;
+      color: rgba(255, 192, 203, 0.18);
+      right: -40px;
+      top: -80px;
+      pointer-events: none;
+    }
+
+    .title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #c2185b;
+    }
+
+    .question {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      color: #7a4a5a;
+    }
+
+    .image-wrapper {
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transform: scale(1.02);
+    }
+
+    .buttons-container {
+      position: relative;
+      margin-top: 8px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 26px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(255, 105, 135, 0.4);
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(255, 105, 135, 0.55);
+    }
+
+    .btn-no {
+      background: #fff0f5;
+      color: #ad1457;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      position: absolute;
+    }
+
+    .btn-no:hover {
+      background: #ffe4ee;
+    }
+
+    .answer {
+      margin-top: 18px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #c2185b;
+      min-height: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">My Love</div>
+    <div class="question">Will you be my Valentine?</div>
+    <div class="subtitle">
+      Only one correct answer is allowed here… choose wisely.
+    </div>
+
+    <div class="image-wrapper">
+      <img
+        src="https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg"
+        alt="Romantic couple illustration"
+      />
+    </div>
+
+    <div class="buttons-container" id="buttons-container">
+      <button class="btn-yes" id="yes-btn">Yes 💕</button>
+      <button class="btn-no" id="no-btn">No</button>
+    </div>
+
+    <div class="answer" id="answer-text"></div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no-btn");
+    const yesBtn = document.getElementById("yes-btn");
+    const container = document.getElementById("buttons-container");
+    const answerText = document.getElementById("answer-text");
+
+    function setInitialNoPosition() {
+      const rect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+      const offsetLeft = rect.width / 2 + 70 - btnRect.width / 2;
+      noBtn.style.left = offsetLeft + "px";
+    }
+
+    function moveNoButton() {
+      const rect = container.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = rect.width - btnRect.width;
+      const maxY = rect.height - btnRect.height;
+
+      const newX = Math.random() * maxX;
+      const newY = Math.random() * maxY;
+
+      noBtn.style.left = newX + "px";
+      noBtn.style.top = newY + "px";
+    }
+
+    noBtn.addEventListener("mouseenter", () => {
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", () => {
+      answerText.textContent = "I knew you’d say yes. I love you ❤️";
+    });
+
+    window.addEventListener("load", () => {
+      setInitialNoPosition();
+    });
+
+    window.addEventListener("resize", () => {
+      setInitialNoPosition();
+    });
+  </script>
+</body>
+</html>
